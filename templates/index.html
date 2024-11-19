@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Liveness check using LLM</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.0.2/dist/face-api.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+  <h1>User KYC Verification</h1>
+  <button id="start-verification">Start Verification</button>
+  <button id="capture-btn" href="javascript:void(0);">Start Capture</button>
+  <div id="task-container">
+    <h3>IMP: Perform the following task after 2 seconds of starting capture</h3>
+    <p id="task-item"></p>
+    <div id="instructionText">Position your face inside the circle</div> <!-- Instruction text overlay -->
+  </div>
+
+  <div id="videoContainer">
+    <video id="videoFeed" autoplay muted></video>
+    <div id="overlay"></div>
+  </div>
+  
+  <!-- <div id="video-container">
+    <video id="video-feed" autoplay playsinline></video>
+    <div id="guide-circle"></div>
+  </div> -->
+  
+  <div id="result-container">
+    <h2>Verification Result</h2>
+    <p id="liveness-result"></p>
+    <p id="confidence-result"></p>
+    <p id="reason-result"></p>
+    <button id="restart-btn">Restart Verification</button>
+  </div>
+
+  <script>
+    const startVerificationBtn = document.getElementById('start-verification');
+    const videoContainer = document.getElementById('videoContainer');
+    const videoFeed = document.getElementById('videoFeed');
+    const guideCircle = document.getElementById('guide-circle');
+    const captureBtn = document.getElementById('capture-btn');
+    const resultContainer = document.getElementById('result-container');
+    const livenessResult = document.getElementById('liveness-result');
+    const reasonResult = document.getElementById('reason-result');
+    const confidencenResult = document.getElementById('confidence-result');
+    const restartBtn = document.getElementById('restart-btn');
+    const taskItem = document.getElementById('task-item');
+    const instructionText = document.getElementById('instructionText');
+    const overlay = document.getElementById('overlay');
+
+    // Start Verification - Open Camera
+    startVerificationBtn.addEventListener('click', async () => {
+        startVerification()
+    });
+    // Capture Images
+    captureBtn.addEventListener('click', (event) => {
+        capture()
+    });
+
+    // Restart Verification
+    restartBtn.addEventListener('click', () => {
+        restart()
+    });
+  </script>
+</body>
+</html>
